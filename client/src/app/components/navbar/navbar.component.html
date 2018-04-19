@@ -10,16 +10,16 @@
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item">
+            <li *ngIf="authService.loggedInExpired()" class="nav-item">
                 <a class="nav-link" routerLink="login">Login</a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="!authService.loggedInExpired()" class="nav-item">
                 <a class="nav-link" routerLink="profile">Profile</a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="authService.loggedInExpired()" class="nav-item">
                 <a class="nav-link" routerLink="signup">Register</a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="!authService.loggedInExpired()" class="nav-item">
                 <a class="nav-link" href="#" (click)="onLogoutClick()" >Logout</a>
             </li>
         </ul>

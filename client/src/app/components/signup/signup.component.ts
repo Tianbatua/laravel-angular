@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
+import { RouterModule, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-signup',
@@ -18,14 +20,24 @@ export class SignupComponent implements OnInit {
 
 	public error = [];
 
-  constructor(private http:HttpClient) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   onSubmit() {
-  	return this.http.post('http://localhost:8000/api/signup', this.form).subscribe(
-  		data => console.log(data),
+  	this.authService.signup(this.form).subscribe(
+  		data => this.handleResponse(data),
   		error => this.handleError(error)
   	);
   	// console.log(this.form);
+  }
+
+  handleResponse(data){
+    this.authService.storeUserData(data.access_token, data.user);
+    setTimeout(()=> {
+      this.router.navigate(['/home']);
+    }, 2000)
   }
 
   handleError(error){
