@@ -29,7 +29,7 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Email or Password does not exist'], 401);
+            return response()->json(['error' => 'Oops error'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -37,8 +37,15 @@ class AuthController extends Controller
 
     public function signup(SignUpRequest $request)
     {
-       User::create($request->all());
-       return $this->login($request);
+      User::create([
+        // $request->all(),
+        'username' => $request['username'],
+        'email' => $request['email'],
+        'password' => $request['password'],
+        'user_roles_id' => 3
+      ]);
+
+      return $this->login($request);
     }
 
     /**

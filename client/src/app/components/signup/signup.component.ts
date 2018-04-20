@@ -37,7 +37,7 @@ export class SignupComponent implements OnInit {
     this.authService.storeUserData(data.access_token, data.user);
     setTimeout(()=> {
       this.router.navigate(['/home']);
-    }, 2000)
+    }, 500)
   }
 
   handleError(error){
