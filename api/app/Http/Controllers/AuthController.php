@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignUpRequest;
+use Illuminate\Http\Request;
 use App\User;
+use App\UserAddress;
 
 class AuthController extends Controller
 {
@@ -45,7 +47,7 @@ class AuthController extends Controller
         'user_roles_id' => 3
       ]);
 
-      return $this->login($request);
+      return $this->login($request); 
     }
 
     /**
@@ -55,7 +57,20 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+      $profile = \DB::table('users')
+            ->leftJoin('user_addresses', 'users.id', '=', 'user_addresses.user_id')
+            ->leftJoin('user_roles', 'users.user_roles_id', '=', 'user_roles.id')
+            ->where('users.id', '=', auth()->user()->id)
+            ->select('users.username', 'users.email', 'user_addresses.address', 'user_addresses.province', 'user_addresses.city', 'user_addresses.country', 'user_addresses.postal_code', 'user_roles.label')
+            ->get();
+      if(!$profile){
+        return response()->json([
+          'success' => false,
+          'message' => 'No user found'
+        ]);
+      }else{
+        return response()->json($profile[0]);
+      }
     }
 
     /**
@@ -89,11 +104,41 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+      return response()->json([
+          'access_token' => $token,
+          'token_type' => 'bearer',
+          'expires_in' => auth()->factory()->getTTL() * 600,
+          'user' => auth()->user()->username
+      ]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+      $updateUser = \DB::table('users')
+            ->where('users.id', '=', auth()->user()->id)
+            ->update([
+              'users.username' => $request['username'] 
+            ]);
+      $updateAddress = UserAddress::updateOrCreate(
+          ['user_id' => auth()->user()->id],
+          [
+            'address' => $request['address'],
+            'province' => $request['province'],
+            'city' => $request['city'],
+            'country' => $request['country'],
+            'postal_code' => $request['postal_code']
+          ]
+      );
+      if(!$updateUser){
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
+          'success' => false,
+          'message' => 'update failed'
         ]);
+      }else{
+        return response()->json([
+          'success' => true,
+          'message' => 'update successful!',
+        ]);
+      }
     }
 }

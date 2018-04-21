@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import {Observable} from 'rxjs/Observable';
 
 
 
@@ -10,8 +11,20 @@ export class AuthService {
 	private baseUrl = 'http://localhost:8000/api';
 	authToken;
   user;
+  options;
+  p;
 
   constructor(private http:HttpClient) { }
+
+  createAuthenticationHeaders(){
+    this.loadToken();
+    this.options = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'bearer' + ' ' + this.authToken
+      })
+    };
+  }
 
   signup(data){
   	return this.http.post(this.baseUrl + '/signup', data);
@@ -24,9 +37,7 @@ export class AuthService {
   // Function to get token from client local storage
   loadToken(){
     const token = localStorage.getItem('token'); // Get token and asssign to variable to be used elsewhere
-    const user = localStorage.getItem('user'); 
     this.authToken = token;
-    this.user = user;
   }
 
   // Store user's data in client local storage
@@ -52,8 +63,15 @@ export class AuthService {
 
   // Get user's profile data
   getProfile(){
-  	this.loadToken();
-    return this.user;
+    this.createAuthenticationHeaders();
+    return this.http.get(this.baseUrl + '/me', this.options);
+  }
+
+  // Update user's profile data
+  updateProfile(data){
+    console.log(JSON.stringify(data));
+    return this.http.post(this.baseUrl + '/updateProfile', JSON.stringify(data), this.options);
+  }
   }
 
 }

@@ -10,6 +10,8 @@ Route::group([
     Route::post('signup', 'AuthController@signup');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+    Route::get('me', 'AuthController@me');
+    Route::post('updateProfile', 'AuthController@updateProfile');
+    Route::get('profile', 'AuthController@profile');
 
 });

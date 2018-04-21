@@ -30,7 +30,7 @@ export class SignupComponent implements OnInit {
   		data => this.handleResponse(data),
   		error => this.handleError(error)
   	);
-  	// console.log(this.form);
+  	console.log(this.form);
   }
 
   handleResponse(data){
