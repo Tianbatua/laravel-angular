@@ -11,7 +11,6 @@ import { RouterModule, Router } from '@angular/router';
 export class SignupComponent implements OnInit {
 
 	public form = {
-
 		email: null,
 		username: null,
 		password: null,

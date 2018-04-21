@@ -12,6 +12,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { HomeComponent } from './components/home/home.component';
 import { AuthService } from './services/auth.service';
+import { ArticleService } from './services/article.service';
+import { CreateComponent } from './components/create/create.component';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { AuthService } from './services/auth.service';
     LoginComponent,
     SignupComponent,
     ProfileComponent,
-    HomeComponent
+    HomeComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +35,6 @@ import { AuthService } from './services/auth.service';
 
   ],
   bootstrap: [AppComponent],
-  providers: [AuthService]
+  providers: [AuthService, ArticleService]
 })
 export class AppModule { }

@@ -14,4 +14,7 @@ Route::group([
     Route::post('updateProfile', 'AuthController@updateProfile');
     Route::get('profile', 'AuthController@profile');
 
+    Route::get('articles', 'ArticleController@articleList');
+    Route::post('addArticle', 'ArticleController@add');
+
 });

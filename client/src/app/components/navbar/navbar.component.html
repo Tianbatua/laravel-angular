@@ -16,6 +16,9 @@
             <li *ngIf="!authService.loggedInExpired()" class="nav-item">
                 <a class="nav-link" routerLink="profile">Profile</a>
             </li>
+            <li *ngIf="!authService.loggedInExpired()" class="nav-item">
+                <a class="nav-link" routerLink="add">Add</a>
+            </li>
             <li *ngIf="authService.loggedInExpired()" class="nav-item">
                 <a class="nav-link" routerLink="signup">Register</a>
             </li>

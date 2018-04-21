@@ -12,7 +12,6 @@ export class AuthService {
 	authToken;
   user;
   options;
-  p;
 
   constructor(private http:HttpClient) { }
 

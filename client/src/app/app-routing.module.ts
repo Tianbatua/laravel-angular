@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { CreateComponent } from './components/create/create.component';
 
 
 const appRoutes : Routes = [
@@ -15,8 +16,7 @@ const appRoutes : Routes = [
   },
   { 
   	path: 'signup', 
-  	component: SignupComponent,
-  	// canActivate: [NotAuthGuard] 
+  	component: SignupComponent, 
   },
   { 
   	path: 'login', 
@@ -25,8 +25,11 @@ const appRoutes : Routes = [
   { 
   	path: 'profile', 
   	component: ProfileComponent,
-  	// canActivate: [AuthGuard]
 	},
+  { 
+    path: 'add', 
+    component: CreateComponent,
+  },
   { 
   	path: '**', 
   	component: HomeComponent 
