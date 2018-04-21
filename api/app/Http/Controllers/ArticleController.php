@@ -23,7 +23,22 @@ class ArticleController extends Controller
 
     public function articleList()
     {
-        $articles = Article::all();
+        $articles = \DB::table('articles')
+            ->leftJoin('users', 'articles.user_id', '=', 'users.id')
+            ->orderBy('articles.created_at', 'desc')
+            ->select('users.username', 'articles.body')
+            ->get();
+        return response()->json($articles);
+    }
+
+    public function myArticles()
+    {
+        $articles = \DB::table('articles')
+            ->leftJoin('users', 'articles.user_id', '=', 'users.id')
+            ->where('users.id', '=', auth()->user()->id)
+            ->orderBy('articles.created_at', 'desc')
+            ->select('users.username', 'articles.body', 'articles.id')
+            ->get();
         return response()->json($articles);
     }
 
@@ -44,5 +59,24 @@ class ArticleController extends Controller
             ]);
         }
     }
+
+    public function deleteArticle($id)
+    {
+        $article = Article::find($id);
+
+        if($article->delete()){
+            return response()->json([
+                'success' => true,
+                'message' => 'article deleted'
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'failed'
+            ]);
+        }
+    }
+
+
 
 }

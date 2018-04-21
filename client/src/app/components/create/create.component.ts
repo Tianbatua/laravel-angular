@@ -31,7 +31,7 @@ export class CreateComponent implements OnInit {
 
   handleResponse(data){
     setTimeout(()=> {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/myarticles']);
     }, 500)
   }
 

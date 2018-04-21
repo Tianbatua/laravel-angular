@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { CreateComponent } from './components/create/create.component';
+import { MyarticlesComponent } from './components/myarticles/myarticles.component';
 
 
 const appRoutes : Routes = [
@@ -27,7 +28,11 @@ const appRoutes : Routes = [
   	component: ProfileComponent,
 	},
   { 
-    path: 'add', 
+    path: 'myarticles', 
+    component: MyarticlesComponent,
+  },
+  { 
+    path: 'myarticles/add', 
     component: CreateComponent,
   },
   { 

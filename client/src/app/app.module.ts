@@ -14,6 +14,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthService } from './services/auth.service';
 import { ArticleService } from './services/article.service';
 import { CreateComponent } from './components/create/create.component';
+import { MyarticlesComponent } from './components/myarticles/myarticles.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { CreateComponent } from './components/create/create.component';
     SignupComponent,
     ProfileComponent,
     HomeComponent,
-    CreateComponent
+    CreateComponent,
+    MyarticlesComponent
   ],
   imports: [
     BrowserModule,

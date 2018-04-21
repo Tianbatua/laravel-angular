@@ -16,5 +16,6 @@ Route::group([
 
     Route::get('articles', 'ArticleController@articleList');
     Route::post('addArticle', 'ArticleController@add');
-
+    Route::get('myarticles', 'ArticleController@myArticles');
+    Route::post('deleteArticle/{id}', 'ArticleController@deleteArticle');
 });
